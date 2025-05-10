@@ -36,27 +36,16 @@ SRC = \
 	srcs/process/process_u.c \
 	srcs/process/process_upperx.c
 
-BSRC = \
-	srcs/is_ox_bonus.c \
-	srcs/process_bonus/minus/minus_c_bonus.c \
-	srcs/process_bonus/minus/minus_s_bonus.c \
-	srcs/process_bonus/sharp/sharp_lowerx_bonus.c \
-	srcs/process_bonus/sharp/sharp_o_bonus.c \
-	srcs/process_bonus/sharp/sharp_upperx_bonus.c \
-	srcs/process_bonus/width/width_c_bonus.c \
-	srcs/process_bonus/width/width_s_bonus.c \
-	srcs/process_bonus/width/width_ptr_bonus.c \
-	srcs/process_bonus/width/width_d_bonus.c \
-	srcs/process_bonus/width/width_i_bonus.c \
-	srcs/process_bonus/width/width_lowerx_bonus.c \
-	srcs/process_bonus/width/width_upperx_bonus.c \
-	srcs/process_bonus/width/width_u_bonus.c \
-	srcs/process_bonus/zero/0_s_bonus.c \
-	srcs/process_bonus/zero/0_d_bonus.c \
-	srcs/process_bonus/zero/0_i_bonus.c \
-	srcs/process_bonus/zero/0_lowerx_bonus.c \
-	srcs/process_bonus/zero/0_u_bonus.c \
-	srcs/process_bonus/zero/0_upperx_bonus.c
+BSRC = srcs/is_option_bonus.c \
+	   srcs/process_bonus/minus/minus_c_bonus.c \
+	   srcs/process_bonus/minus/minus_di_bonus.c \
+	   srcs/process_bonus/minus/minus_lowerx_bonus.c \
+	   srcs/process_bonus/minus/minus_ptr_bonus.c \
+	   srcs/process_bonus/minus/minus_s_bonus.c \
+	   srcs/process_bonus/minus/minus_u_bonus.c \
+	   srcs/process_bonus/minus/minus_upperx_bonus.c \
+	   srcs/utils/ft_strncpy_bonus.c 
+
 
 OBJ  = $(SRC:.c=.o)
 BOBJ = $(BSRC:.c=.o)

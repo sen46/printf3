@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   space_c_bonus.c                                    :+:      :+:    :+:   */
+/*   is_option_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 22:14:28 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/05 22:18:32 by ssawa            ###   ########.fr       */
+/*   Created: 2025/05/09 18:24:37 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/09 18:26:44 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/ft_printf.h"
-
-int	process_c_width(va_list *ap, int len)
+int	is_option(char c)
 {
-	char	*res;
-	char	c;
-
-	c = (char)va_arg(*ap, int);
-	res = ft_calloc(len, sizeof(char));
-	if (res == NULL)
-		return (0);
-	ft_memset(res, ' ', len - 1);
-	ft_putstr_fd(res, 1);
-	write(1, &c, 1);
-	free(res);
-	return (len);
+	if (c == '+')
+		return (1);
+	else if (c == '-')
+		return (2);
+	else if (c == '0')
+		return (3);
+	else if (c == '#')
+		return (4);
+	else if (c == ' ')
+		return (5);
+	return (0);
 }

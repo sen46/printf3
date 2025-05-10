@@ -34,7 +34,9 @@ SRCS =  ft_atoi.c \
         ft_substr.c \
         ft_tolower.c \
         ft_toupper.c \
-		ft_nbrlen.c
+		ft_nbrlen.c \
+		ft_min.c \
+		ft_max.c
 
 BSRCS = ft_lstadd_back_bonus.c \
         ft_lstadd_front_bonus.c \

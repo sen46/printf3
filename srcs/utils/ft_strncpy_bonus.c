@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_lowerx_bonus.c                             :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 09:27:36 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/04 23:05:44 by ssawa            ###   ########.fr       */
+/*   Created: 2025/05/09 19:33:07 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/09 19:35:27 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/ft_printf.h"
+#include <unistd.h>
 
-int	process_lowerx_sharp(va_list *ap)
+void	ft_strncpy(char *dest, const char *str, int len)
 {
-	int				len;
-	char			*str;
-	unsigned int	val;
+	int	i;
 
-	len = 0;
-	val = va_arg(*ap, unsigned int);
-	str = ft_itoa_base(val, "0123456789abcdef");
-	if (val != 0)
+	i = 0;
+	while (str[i] && i < len)
 	{
-		len += 2;
-		write(1, "0x", 2);
+		// write(1, &str[i], 1);
+		dest[i] = str[i];
+		i++;
 	}
-	ft_putstr_fd(str, 1);
-	len += ft_strlen(str);
-	free(str);
-	return (len);
 }

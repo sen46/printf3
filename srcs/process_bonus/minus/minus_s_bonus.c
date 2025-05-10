@@ -5,33 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 22:12:36 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/07 22:31:57 by ssawa            ###   ########.fr       */
+/*   Created: 2025/05/09 18:56:11 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/09 22:37:11 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_printf.h"
 
-int	process_s_minus(va_list *ap, int len)
+int	minus_s(va_list *ap, t_len len)
 {
-	size_t	i;
-	char	*res;
 	char	*str;
+	char	*res;
 
 	str = va_arg(*ap, char *);
-	if (len < (int)ft_strlen(str))
-		len = ft_strlen(str);
-	res = ft_calloc(len + 1, sizeof(char));
-	if (res == NULL)
-		return (-1);
-	ft_memset(res, ' ', len);
-	i = 0;
-	while (i < ft_strlen(str))
-	{
-		res[i] = str[i];
-		i++;
-	}
-	ft_putstr_fd(res, 1);
+	if (len.precision == 0)
+		len.precision = ft_strlen(str);
+	len.precision = ft_min(len.precision, ft_strlen(str));
+	len.width = ft_max(len.precision, len.width);
+	res = ft_calloc(len.width + 1, sizeof(char));
+	ft_memset(res, ' ', len.width);
+	// printf("\nstr=%s=\n", str);
+	ft_strncpy(res, str, len.precision);
+	//printf("\nstr=%s=\n", res);
+	write(1, res, len.width);
 	free(res);
-	return (len);
+	return (len.width);
 }
+

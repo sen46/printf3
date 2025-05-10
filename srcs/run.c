@@ -6,138 +6,92 @@
 /*   By: assistant <assistant@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 20:30:00 by assistant         #+#    #+#             */
-/*   Updated: 2025/05/07 22:09:40 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/09 19:23:56 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+#include "libft/libft.h"
 
-/**
- * Parse a positive integer from format string starting at fmt[*i].
- * Advances *i until non-digit.
- */
-static int	parse_number(const char *fmt, int *i)
-{
-	int	n;
-
-	n = 0;
-	while (fmt[*i] >= '0' && fmt[*i] <= '9')
-	{
-		n = n * 10 + (fmt[*i] - '0');
-		(*i)++;
-	}
-	return (n);
-}
-
-static void	handle_minus(const char *fmt, int *i, va_list *ap, int *cnt)
-{
-	int	len;
-	// char	spec;
-
-	while (fmt[*i] == '-')
-		(*i)++;
-	if (is_specifier(fmt[*i]))
-		len = 1;
-	else
-		len = parse_number(fmt, i);
-	// printf("len = %d", len);
-	spec_judge_minus(fmt[*i], ap, cnt, len);
-	(*i)++;
-}
-/**
- * Handle "#" flag: calls is_ox for specifier
- */
-static void	handle_hash(const char *fmt, int *i, va_list *ap, int *cnt)
-{
-	char spec;
-
-	(*i)++;
-	spec = fmt[*i];
-	if (is_specifier(spec))
-	{
-		is_ox(ap, spec, cnt);
-		(*i)++;
-	}
-}
-
-/**
- * Handle '0' or '.' prefix: calls spec_judge_zero with parsed width
- */
-static void	handle_zero_dot(const char *fmt, int *i, va_list *ap, int *cnt)
-{
-	int	len;
-
-	len = 0;
-	while (fmt[++(*i)])
-	{
-		if (is_specifier(fmt[*i]))
-		{
-			spec_judge_zero(fmt[*i], ap, cnt, len);
-			(*i)++;
-			break;
-		}
-		len = len * 10 + (fmt[*i] - '0');
-	}
-}
-
-/**
- * Handle width (numeric) prefix: calls spec_judge_space with parsed width
- */
-static void	handle_width(const char *fmt, int *i, va_list *ap, int *cnt)
-{
-	int	len;
-
-	len = parse_number(fmt, i);
-	if (is_specifier(fmt[*i]))
-	{
-		spec_judge_width(fmt[*i], ap, cnt, len);
-		(*i)++;
-	}
-}
-
-// void	handle_space(const char *fmt, int *i, va_list *ap, int *cnt)
-// {
-	// while (fmt[*i] == ' ')
-		// (*i)++;
-	// spec_judge_space(fmt[*i], ap, cnt, jkkkkkkkkkkkkkk)
-// }
-
-/**
- * Main run loop: iterates format string and dispatches on '%'
- */
 int		run(va_list *ap, const char *fmt)
 {
 	int	i;
-	int cnt;
+	t_len	len;
+	int printed_chars;
 
 	i = 0;
-	cnt = 0;
+	printed_chars = 0;
 	while (fmt[i])
 	{
 		if (fmt[i] == '%')
 		{
+			len.width = 0;
 			i++;
 			if (is_specifier(fmt[i]))
-				spec_judge(fmt[i++], ap, &cnt);
+				spec_judge(fmt[i++], ap, &printed_chars);
 			else if (fmt[i] == '-')
-				handle_minus(fmt, &i, ap, &cnt);
+			{
+				if (ft_isdigit(fmt[++i]))
+				{
+					len.width = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.width);
+				}
+				else
+					len.width = 0;
+				// len.width = ft_atoi(&fmt[++i]);
+				// i += ft_nbrlen_dec(len.width);
+				if (fmt[i] == '.')
+					i++;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.precision = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.precision);
+				}
+				else
+					len.precision = 0;
+				// len.precision = ft_atoi(&fmt[i]);
+				// printf("width = %d\nprecision = %d\n", len.width, len.precision);
+				// printf("\n指定子 =%c=\n", fmt[i++]);
+				spec_judge_minus(fmt[i++] , ap, &printed_chars, len);
+			}
+			else if (fmt[i] == '+')
+			{
+			}
+			else if(fmt[i] == ' ')
+			{
+			}
 			else if (fmt[i] == '#')
-				handle_hash(fmt, &i, ap, &cnt);
-			else if (fmt[i] == '0' || fmt[i] == '.')
-				handle_zero_dot(fmt, &i, ap, &cnt);
-			else if (fmt[i] >= '1' && fmt[i] <= '9')
-				handle_width(fmt, &i, ap, &cnt);
-			else if (fmt[i] == ' ');
-				// handle_space(fmt, &i, ap, &cnt);
+			{
+			}
+			else if (fmt[i] == '0')
+			{
+			}
+			else if (ft_isdigit(fmt[i]))
+			{
+				len.width = ft_atoi(&fmt[i]);
+				i += ft_nbrlen_dec(len.width);
+				if (fmt[i] == '.')
+					i++;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.precision = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.precision);
+				}
+				else
+					len.precision = 0;
+				// len.precision = ft_atoi(&fmt[i]);
+				// printf("fmt[i] =%c=", fmt[i-1]);
+				spec_judge_minus(fmt[i++] , ap, &printed_chars, len);
+			}
 			else
 				return (-1);
 		}
 		else
 		{
 			write(1, &fmt[i++], 1);
-			cnt++;
+			printed_chars++;
 		}
 	}
-	return (cnt);
+	return (printed_chars);
 }
 
