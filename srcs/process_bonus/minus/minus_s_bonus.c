@@ -18,6 +18,8 @@ int	minus_s(va_list *ap, t_len len)
 	char	*res;
 
 	str = va_arg(*ap, char *);
+	if (str == NULL)
+		return (0);
 	if (len.precision == 0)
 		len.precision = ft_strlen(str);
 	len.precision = ft_min(len.precision, ft_strlen(str));

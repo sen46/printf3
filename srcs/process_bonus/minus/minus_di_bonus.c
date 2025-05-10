@@ -20,6 +20,8 @@ int	minus_di(va_list *ap, t_len len)
 	char	*val_str;
 
 	val = va_arg(*ap, int);
+	// if (val == 0 && len.width == 0)
+		// return (0);
 	val_str = ft_itoa(val);
 	val_len = ft_strlen(val_str);
 	len.width = ft_max(len.width, ft_max(len.precision, val_len));

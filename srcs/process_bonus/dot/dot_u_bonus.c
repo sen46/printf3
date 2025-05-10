@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minus_lowerx_bonus.c                               :+:      :+:    :+:   */
+/*   dot_u_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 19:45:23 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/10 09:56:11 by ssawa            ###   ########.fr       */
+/*   Created: 2025/05/09 22:34:58 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/10 16:20:05 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_printf.h"
 
-int	minus_lowerx(va_list *ap, t_len len)
+int	dot_u(va_list *ap, t_len len)
 {
 	unsigned int	val;
+	char			*val_str;
 	int				val_len;
 	char			*res;
-	char			*val_str;
 
 	val = va_arg(*ap, unsigned int);
-	if (val == 0 && len.width == 0)
+	if (val == 0 && len.precision == 0)
 		return (0);
-	val_str = ft_itoa_base(val, "0123456789abcdef");
+	val_str = ft_itoa(val);
 	val_len = ft_strlen(val_str);
 	len.width = ft_max(len.width, ft_max(len.precision, val_len));
 	res = ft_calloc(len.width + 1, sizeof(char));
@@ -39,4 +39,3 @@ int	minus_lowerx(va_list *ap, t_len len)
 	free(val_str);
 	return (len.width);
 }
-

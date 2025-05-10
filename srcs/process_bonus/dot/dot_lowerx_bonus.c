@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minus_lowerx_bonus.c                               :+:      :+:    :+:   */
+/*   dot_lowerx_bonux.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 19:45:23 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/10 09:56:11 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/10 16:20:26 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_printf.h"
 
-int	minus_lowerx(va_list *ap, t_len len)
+int	dot_lowerx(va_list *ap, t_len len)
 {
 	unsigned int	val;
 	int				val_len;
@@ -20,7 +20,7 @@ int	minus_lowerx(va_list *ap, t_len len)
 	char			*val_str;
 
 	val = va_arg(*ap, unsigned int);
-	if (val == 0 && len.width == 0)
+	if (val == 0 && len.precision == 0)
 		return (0);
 	val_str = ft_itoa_base(val, "0123456789abcdef");
 	val_len = ft_strlen(val_str);
@@ -39,4 +39,3 @@ int	minus_lowerx(va_list *ap, t_len len)
 	free(val_str);
 	return (len.width);
 }
-

@@ -44,7 +44,29 @@ BSRC = srcs/is_option_bonus.c \
 	   srcs/process_bonus/minus/minus_s_bonus.c \
 	   srcs/process_bonus/minus/minus_u_bonus.c \
 	   srcs/process_bonus/minus/minus_upperx_bonus.c \
-	   srcs/utils/ft_strncpy_bonus.c 
+	   srcs/utils/ft_strncpy_bonus.c \
+	   srcs/process_bonus/plus/plus_di_bonus.c \
+	   srcs/process_bonus/blank/blank_di_bonus.c \
+	   srcs/process_bonus/hash/hash_lowerx_bonus.c \
+	   srcs/process_bonus/hash/hash_upperx_bonus.c \
+	   srcs/process_bonus/zero/zero_u_bonus.c \
+	   srcs/process_bonus/zero/zero_di_bonus.c \
+	   srcs/process_bonus/zero/zero_lowerx_bonus.c \
+	   srcs/process_bonus/zero/zero_upperx_bonus.c \
+	   srcs/process_bonus/dot/dot_u_bonus.c \
+	   srcs/process_bonus/dot/dot_s_bonus.c \
+	   srcs/process_bonus/dot/dot_di_bonus.c \
+	   srcs/process_bonus/dot/dot_lowerx_bonus.c \
+	   srcs/process_bonus/dot/dot_upperx_bonus.c \
+	   srcs/process_bonus/width/width_s_bonus.c \
+	   srcs/process_bonus/width/width_c_bonus.c \
+	   srcs/process_bonus/width/width_ptr_bonus.c \
+	   srcs/process_bonus/width/width_di_bonus.c \
+	   srcs/process_bonus/width/width_u_bonus.c \
+	   srcs/process_bonus/width/width_upperx_bonus.c \
+	   srcs/process_bonus/width/width_lowerx_bonus.c \
+
+	
 
 
 OBJ  = $(SRC:.c=.o)

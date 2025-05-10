@@ -6,12 +6,13 @@
 /*   By: assistant <assistant@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 20:30:00 by assistant         #+#    #+#             */
-/*   Updated: 2025/05/09 19:23:56 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/10 15:27:05 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 #include "libft/libft.h"
+#include <ctype.h>
 
 int		run(va_list *ap, const char *fmt)
 {
@@ -30,6 +31,100 @@ int		run(va_list *ap, const char *fmt)
 			if (is_specifier(fmt[i]))
 				spec_judge(fmt[i++], ap, &printed_chars);
 			else if (fmt[i] == '-')
+			{
+				while (fmt[i] == '-')
+					i++;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.width = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.width);
+				}
+				else
+					len.width = 0;
+				// len.width = ft_atoi(&fmt[++i]);
+				// i += ft_nbrlen_dec(len.width);
+				if (fmt[i] == '.')
+				{
+					i++;
+					if (isdigit(fmt[i]))
+					{
+						len.precision = ft_atoi(&fmt[i]);
+						i+= ft_nbrlen_dec(len.precision);
+					}
+					else
+						len.precision = 0;
+					spec_judge_dot(fmt[i++], ap, &printed_chars, len);
+				}
+				else
+				{
+					if (ft_isdigit(fmt[i]))
+					{
+						len.precision = ft_atoi(&fmt[i]);
+						i += ft_nbrlen_dec(len.precision);
+					}
+					else
+						len.precision = 0;
+				// len.precision = ft_atoi(&fmt[i]);
+				// printf("width = %d\nprecision = %d\n", len.width, len.precision);
+				// printf("\n指定子 =%c=\n", fmt[i++]);
+					spec_judge_minus(fmt[i++] , ap, &printed_chars, len);
+				}
+			}
+			else if (fmt[i] == '+')
+			{
+				while (fmt[i] == '+')
+					i++;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.width = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.width);
+				}
+				else
+					len.width = 0;
+				// len.width = ft_atoi(&fmt[++i]);
+				// i += ft_nbrlen_dec(len.width);
+				if (fmt[i] == '.')
+					i++;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.precision = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.precision);
+				}
+				else
+					len.precision = 0;
+				// len.precision = ft_atoi(&fmt[i]);
+				// printf("width = %d\nprecision = %d\n", len.width, len.precision);
+				// printf("\n指定子 =%c=\n", fmt[i++]);
+				spec_judge_plus(fmt[i++] , ap, &printed_chars, len);
+			}
+			else if(fmt[i] == ' ')
+			{
+				while (fmt[i] == ' ')
+					i++;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.width = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.width);
+				}
+				else
+					len.width = 0;
+				// len.width = ft_atoi(&fmt[++i]);
+				// i += ft_nbrlen_dec(len.width);
+				if (fmt[i] == '.')
+					i++;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.precision = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.precision);
+				}
+				else
+					len.precision = 0;
+				// len.precision = ft_atoi(&fmt[i]);
+				// printf("width = %d\nprecision = %d\n", len.width, len.precision);
+				// printf("\n指定子 =%c=\n", fmt[i++]);
+				spec_judge_blank(fmt[i++] , ap, &printed_chars, len);
+			}
+			else if (fmt[i] == '#')
 			{
 				if (ft_isdigit(fmt[++i]))
 				{
@@ -52,19 +147,40 @@ int		run(va_list *ap, const char *fmt)
 				// len.precision = ft_atoi(&fmt[i]);
 				// printf("width = %d\nprecision = %d\n", len.width, len.precision);
 				// printf("\n指定子 =%c=\n", fmt[i++]);
-				spec_judge_minus(fmt[i++] , ap, &printed_chars, len);
+				spec_judge_hash(fmt[i++] , ap, &printed_chars, len);
 			}
-			else if (fmt[i] == '+')
+			else if (fmt[i] == '.')
 			{
-			}
-			else if(fmt[i] == ' ')
-			{
-			}
-			else if (fmt[i] == '#')
-			{
+				i++;
+				len.width = 0;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.precision = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.precision);
+				}
+				else
+					len.precision = 0;
+				// len.precision = ft_atoi(&fmt[i]);
+				// printf("width = %d\nprecision = %d\n", len.width, len.precision);
+				// printf("\n指定子 =%c=\n", fmt[i++]);
+				spec_judge_dot(fmt[i++] , ap, &printed_chars, len);
 			}
 			else if (fmt[i] == '0')
 			{
+				while (fmt[i] == '0')
+					i++;
+				len.width = 0;
+				if (ft_isdigit(fmt[i]))
+				{
+					len.precision = ft_atoi(&fmt[i]);
+					i += ft_nbrlen_dec(len.precision);
+				}
+				else
+					len.precision = 0;
+				// len.precision = ft_atoi(&fmt[i]);
+				// printf("width = %d\nprecision = %d\n", len.width, len.precision);
+				// printf("\n指定子 =%c=\n", fmt[i++]);
+				spec_judge_zero(fmt[i++] , ap, &printed_chars, len);
 			}
 			else if (ft_isdigit(fmt[i]))
 			{
@@ -81,7 +197,7 @@ int		run(va_list *ap, const char *fmt)
 					len.precision = 0;
 				// len.precision = ft_atoi(&fmt[i]);
 				// printf("fmt[i] =%c=", fmt[i-1]);
-				spec_judge_minus(fmt[i++] , ap, &printed_chars, len);
+				spec_judge_width(fmt[i++] , ap, &printed_chars, len);
 			}
 			else
 				return (-1);
@@ -94,4 +210,3 @@ int		run(va_list *ap, const char *fmt)
 	}
 	return (printed_chars);
 }
-
