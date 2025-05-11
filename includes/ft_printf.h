@@ -24,6 +24,7 @@ typedef struct s_len
 {
 	int	width;
 	int	precision;
+	int	dot;
 } t_len;
 
 // 基本的な処理
@@ -44,14 +45,14 @@ int		ft_printf(const char *arg1, ...);
 
 // bonus
 // minus
-void	spec_judge_minus(char c, va_list *ap, int *cnt, t_len len);
+void	spec_judge_minus(char c, va_list *ap, int *cnt, t_len *len);
 int	minus_c(va_list *ap, t_len len);
-int	minus_s(va_list *ap, t_len len);
-int	minus_di(va_list *ap, t_len len);
-int	minus_lowerx(va_list *ap, t_len len);
-int	minus_ptr(va_list *ap, t_len len);
-int	minus_u(va_list *ap, t_len len);
-int	minus_upperx(va_list *ap, t_len len);
+int	minus_s(va_list *ap, t_len *len);
+int	minus_di(va_list *ap, t_len *len);
+int	minus_lowerx(va_list *ap, t_len *len);
+int	minus_ptr(va_list *ap, t_len *len);
+int	minus_u(va_list *ap, t_len *len);
+int	minus_upperx(va_list *ap, t_len *len);
 
 // plus
 void	spec_judge_plus(char c, va_list *ap, int *cnt, t_len len);
@@ -67,11 +68,11 @@ int	hash_lowerx(va_list *ap, t_len len);
 int	hash_upperx(va_list *ap, t_len len);
 
 // zero
-void	spec_judge_zero(char c, va_list *ap, int *cnt, t_len len);
-int	zero_di(va_list *ap, t_len len);
-int	zero_u(va_list *ap, t_len len);
-int	zero_upperx(va_list *ap, t_len len);
-int	zero_lowerx(va_list *ap, t_len len);
+void	spec_judge_zero(char c, va_list *ap, int *cnt, t_len *len);
+int	zero_di(va_list *ap, t_len *len);
+int	zero_u(va_list *ap, t_len *len);
+int	zero_upperx(va_list *ap, t_len *len);
+int	zero_lowerx(va_list *ap, t_len *len);
 
 // dot
 void	spec_judge_dot(char c, va_list *ap, int *cnt, t_len len);
@@ -82,16 +83,26 @@ int		dot_upperx(va_list *ap, t_len len);
 int		dot_lowerx(va_list *ap, t_len len);
 
 // width
-void	spec_judge_width(char c, va_list *ap, int *cnt, t_len len);
-int		width_s(va_list *ap, t_len len);
-int		width_c(va_list *ap, t_len len);
-int		width_ptr(va_list *ap, t_len len);
-int		width_di(va_list *ap, t_len len);
-int		width_u(va_list *ap, t_len len);
-int		width_upperx(va_list *ap, t_len len);
-int		width_lowerx(va_list *ap, t_len len);
+void	spec_judge_width(char c, va_list *ap, int *cnt, t_len *len);
+int		width_s(va_list *ap, t_len *len);
+int		width_c(va_list *ap, t_len *len);
+int		width_ptr(va_list *ap, t_len *len);
+int		width_di(va_list *ap, t_len *len);
+int		width_u(va_list *ap, t_len *len);
+int		width_upperx(va_list *ap, t_len *len);
+int		width_lowerx(va_list *ap, t_len *len);
+
+// void	spec_judge_width(char c, va_list *ap, int *cnt, t_len len);
+// int		width_s(va_list *ap, t_len len);
+// int		width_c(va_list *ap, t_len len);
+// int		width_ptr(va_list *ap, t_len len);
+// int		width_di(va_list *ap, t_len len);
+// int		width_u(va_list *ap, t_len len);
+// int		width_upperx(va_list *ap, t_len len);
+// int		width_lowerx(va_list *ap, t_len len);
 
 // utils
 void	ft_strncpy(char *dest, const char *str, int len);
+void	spec_judge_with_flag(char flag, char spec, va_list *ap, int *printed_chars, t_len len);
 
 #endif

@@ -34,10 +34,10 @@ void	spec_judge(char c, va_list *ap, int *cnt)
 		*cnt += process_per();
 }
 
-void	spec_judge_minus(char c, va_list *ap, int *cnt, t_len len)
+void	spec_judge_minus(char c, va_list *ap, int *cnt, t_len *len)
 {
 	if (c == 'c')
-		*cnt += minus_c(ap, len);
+		*cnt += minus_c(ap, *len);
 	else if (c == 's')
 		*cnt += minus_s(ap, len);
 	else if (c == 'd' || c == 'i')
@@ -63,7 +63,7 @@ void	spec_judge_blank(char c, va_list *ap, int *cnt, t_len len)
 	if (c == 'd' || c == 'i')
 		*cnt += blank_di(ap, len);
 	else if (c == 's')
-		*cnt += minus_s(ap, len);
+		*cnt += minus_s(ap, &len);
 }
 
 void	spec_judge_hash(char c, va_list *ap, int *cnt, t_len len)
@@ -74,7 +74,7 @@ void	spec_judge_hash(char c, va_list *ap, int *cnt, t_len len)
 		*cnt += hash_upperx(ap, len);
 }
 
-void	spec_judge_zero(char c, va_list *ap, int *cnt, t_len len)
+void	spec_judge_zero(char c, va_list *ap, int *cnt, t_len *len)
 {
 	if (c == 'd' || c == 'i')
 		*cnt += zero_di(ap, len);
@@ -100,6 +100,24 @@ void	spec_judge_dot(char c, va_list *ap, int *cnt, t_len len)
 		*cnt += dot_upperx(ap, len);
 }
 
+void	spec_judge_width(char c, va_list *ap, int *cnt, t_len *len)
+{
+	if (c == 'c')
+		*cnt += width_c(ap, len);
+	else if (c == 's')
+		*cnt += width_s(ap, len);
+	else if (c == 'd' || c == 'i')
+		*cnt += width_di(ap, len);
+	else if (c == 'p')
+		*cnt += width_ptr(ap, len);
+	else if (c == 'u')
+		*cnt += width_u(ap, len);
+	else if (c == 'x')
+		*cnt += width_lowerx(ap, len);
+	else if (c == 'X')
+		*cnt += width_upperx(ap, len);
+}
+/*
 void	spec_judge_width(char c, va_list *ap, int *cnt, t_len len)
 {
 	if (c == 'c')
@@ -117,3 +135,4 @@ void	spec_judge_width(char c, va_list *ap, int *cnt, t_len len)
 	else if (c == 'X')
 		*cnt += width_upperx(ap, len);
 }
+*/
