@@ -14,9 +14,8 @@
 
 int	minus_c(va_list *ap, t_len len)
 {
-	
 	unsigned char	c;
-	char	*res;
+	char			*res;
 
 	if (len.width == 0)
 		len.width = 1;

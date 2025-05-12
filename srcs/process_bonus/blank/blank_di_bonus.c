@@ -14,33 +14,17 @@
 
 static char	*ft_itoa_blank(long n)
 {
-	long	num;
-	int		len;
+	char	*num_str;
 	char	*res;
-	int		idx;
 
-	num = n;
-	len = ft_nbrlen_dec(num);
-	if (num >= 0)
-		len++;
-	res = (char *)ft_calloc(len + 1, sizeof(char));
-	if (res == NULL)
+	num_str = ft_itoa(n);
+	if (!num_str)
 		return (NULL);
-	if (num < 0)
-	{
-		res[0] = '-';
-		num = -num;
-	}
+	if (n >= 0)
+		res = ft_strjoin(" ", num_str);
 	else
-		res[0] = ' ';
-	if (num == 0)
-		res[1] = '0';
-	idx = len - 1;
-	while (num > 0)
-	{
-		res[idx--] = '0' + (num % 10);
-		num /= 10;
-	}
+		res = ft_strdup(num_str);
+	free(num_str);
 	return (res);
 }
 

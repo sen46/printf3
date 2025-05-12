@@ -14,34 +14,23 @@
 
 static char	*ft_itoa_sign(long n)
 {
-	long	num;
-	int		len;
 	char	*res;
-	int		idx;
+	char	*res_sign;
 
-	num = n;
-	len = ft_nbrlen_dec(num);
-	if (num >= 0)
-		len++;
-	res = (char *)ft_calloc(len + 1, sizeof(char));
-	if (res == NULL)
-		return (NULL);
-	if (num < 0)
+	if (n == 0)
+		return (ft_strdup("+0"));
+	if (n < 0)
 	{
-		res[0] = '-';
-		num = -num;
+		res = ft_itoa(-n);
+		res_sign = ft_strjoin("-", res);
 	}
 	else
-		res[0] = '+';
-	if (num == 0)
-		res[1] = '0';
-	idx = len - 1;
-	while (num > 0)
 	{
-		res[idx--] = '0' + (num % 10);
-		num /= 10;
+		res = ft_itoa(n);
+		res_sign = ft_strjoin("+", res);
 	}
-	return (res);
+	free(res);
+	return (res_sign);
 }
 
 int	plus_di(va_list *ap, t_len len)

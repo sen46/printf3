@@ -14,9 +14,8 @@
 
 int	width_c(va_list *ap, t_len *len)
 {
-	
 	unsigned char	c;
-	char	*res;
+	char			*res;
 
 	c = (unsigned char)va_arg(*ap, int);
 	res = ft_calloc(len->width + 1, sizeof(char));

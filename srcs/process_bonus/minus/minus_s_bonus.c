@@ -28,9 +28,7 @@ int	minus_s(va_list *ap, t_len *len)
 	len->width = ft_max(len->precision, len->width);
 	res = ft_calloc(len->width + 1, sizeof(char));
 	ft_memset(res, ' ', len->width);
-	// printf("\nstr=%s=\n", str);
 	ft_strncpy(res, str, len->precision);
-	//printf("\nstr=%s=\n", res);
 	write(1, res, len->width);
 	free(res);
 	return (len->width);

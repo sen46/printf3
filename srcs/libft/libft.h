@@ -6,7 +6,7 @@
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 23:07:55 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/09 19:40:59 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/12 20:18:33 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int		ft_toupper(int c);
 
 char	*ft_itoa(long n);
 char	*ft_itoa_base(unsigned long num, char *base);
-int	ft_nbrlen_dec(long nbr);
-int	ft_nbrlen_hex(unsigned long nbr);
+int		ft_nbrlen_dec(long nbr);
+int		ft_nbrlen_hex(unsigned long nbr);
 long	ft_min(long a, long b);
 long	ft_max(long a, long b);
 #endif

@@ -32,6 +32,19 @@ static void	check(char *res, int len)
 		res[i] = '-';
 }
 
+static void	width_di_dot_sub(char *res, t_len *len, char *val_str, int val_len)
+{
+	if (len->precision > val_len)
+	{
+		ft_memset(res + len->width - len->precision, '0', len->precision);
+		ft_strncpy(&res[len->precision - val_len], val_str, val_len);
+	}
+	else
+		ft_strncpy(res + len->width - val_len, val_str, val_len);
+	check(res, len->precision);
+	write(1, res, len->width);
+}
+
 static int	width_di_dot(va_list *ap, t_len *len)
 {
 	int		val;
@@ -42,12 +55,8 @@ static int	width_di_dot(va_list *ap, t_len *len)
 	val = va_arg(*ap, int);
 	val_str = ft_itoa(val);
 	val_len = ft_strlen(val_str);
-	// 出力の幅は精度、幅、数の長さの最大値
 	if (val < 0)
-	{
-		// val_len++;
 		len->precision++;
-	}
 	len->width = ft_max(len->width, ft_max(len->precision, val_len));
 	res = ft_calloc(len->width + 1, sizeof(char));
 	ft_memset(res, ' ', len->width);
@@ -57,17 +66,7 @@ static int	width_di_dot(va_list *ap, t_len *len)
 		len->width = 0;
 	}
 	else
-	{
-		if (len->precision > val_len)
-		{
-			ft_memset(res + len->width - len->precision, '0', len->precision);
-			ft_strncpy(&res[len->precision - val_len], val_str, val_len);
-		}
-		else
-			ft_strncpy(res + len->width - val_len, val_str, val_len);
-		check(res, len->precision);
-		write(1, res, len->width);
-	}
+		width_di_dot_sub(res, len, val_str, val_len);
 	free(res);
 	free(val_str);
 	return (len->width);
@@ -98,12 +97,8 @@ int	width_di(va_list *ap, t_len *len)
 	int	rtn;
 
 	if (len->dot)
-	{
 		rtn = width_di_dot(ap, len);
-	}
 	else
-	{
 		rtn = width_di_nodot(ap, len);
-	}
 	return (rtn);
 }

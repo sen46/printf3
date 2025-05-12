@@ -39,4 +39,3 @@ int	dot_upperx(va_list *ap, t_len len)
 	free(val_str);
 	return (len.width);
 }
-

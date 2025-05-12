@@ -12,45 +12,31 @@
 
 #include "../../../includes/ft_printf.h"
 
-/*
-int	width_lowerx(va_list *ap, t_len len)
+static void	fill_zero(char *res, char *val_str, int val_len, t_len len)
 {
-	unsigned int	val;
-	int				val_len;
-	char			*res;
-	char			*val_str;
+	ft_memset(res + len.width - len.precision, '0', len.precision);
+	ft_strncpy(&res[len.precision - val_len], val_str, val_len);
+}
 
-	val = va_arg(*ap, unsigned int);
-	val_str = ft_itoa_base(val, "0123456789abcdef");
-	val_len = ft_strlen(val_str);
-	len->width = ft_max(len->width, ft_max(len->precision, val_len));
-	res = ft_calloc(len->width + 1, sizeof(char));
-	ft_memset(res, ' ', len->width);
+static void	format_value(char *res, char *val_str, int val_len, t_len *len)
+{
 	if (len->precision > val_len)
-	{
-		ft_memset(res, '0', len->precision);
-		ft_strncpy(&res[len->precision - val_len], val_str, val_len);
-	}
+		fill_zero(res, val_str, val_len, *len);
 	else
 		ft_strncpy(res + len->width - val_len, val_str, val_len);
 	write(1, res, len->width);
-	free(res);
-	free(val_str);
-	return (len->width);
 }
-*/
 
-static int	width_lowerx_dot(va_list *ap, t_len *len)
+int	width_lowerx_dot(va_list *ap, t_len *len)
 {
-	unsigned int		val;
-	int		val_len;
-	char	*res;
-	char	*val_str;
+	unsigned int	val;
+	char			*val_str;
+	char			*res;
+	int				val_len;
 
 	val = va_arg(*ap, unsigned int);
 	val_str = ft_itoa_base(val, "0123456789abcdef");
 	val_len = ft_strlen(val_str);
-	// 出力の幅は精度、幅、数の長さの最大値
 	len->width = ft_max(len->width, ft_max(len->precision, val_len));
 	res = ft_calloc(len->width + 1, sizeof(char));
 	ft_memset(res, ' ', len->width);
@@ -60,27 +46,18 @@ static int	width_lowerx_dot(va_list *ap, t_len *len)
 		len->width = 0;
 	}
 	else
-	{
-		if (len->precision > val_len)
-		{
-			ft_memset(res + len->width - len->precision, '0', len->precision);
-			ft_strncpy(&res[len->precision - val_len], val_str, val_len);
-		}
-		else
-			ft_strncpy(res + len->width - val_len, val_str, val_len);
-		write(1, res, len->width);
-	}
+		format_value(res, val_str, val_len, len);
 	free(res);
 	free(val_str);
 	return (len->width);
 }
 
-static int	width_lowerx_nodot(va_list *ap, t_len *len)
+int	width_lowerx_nodot(va_list *ap, t_len *len)
 {
-	unsigned int		val;
-	int		val_len;
-	char	*res;
-	char	*val_str;
+	unsigned int	val;
+	int				val_len;
+	char			*val_str;
+	char			*res;
 
 	val = va_arg(*ap, unsigned int);
 	val_str = ft_itoa_base(val, "0123456789abcdef");
@@ -95,19 +72,10 @@ static int	width_lowerx_nodot(va_list *ap, t_len *len)
 	return (len->width);
 }
 
-
-
 int	width_lowerx(va_list *ap, t_len *len)
 {
-	int	rtn;
-
 	if (len->dot)
-	{
-		rtn = width_lowerx_dot(ap, len);
-	}
+		return (width_lowerx_dot(ap, len));
 	else
-	{
-		rtn = width_lowerx_nodot(ap, len);
-	}
-	return (rtn);
+		return (width_lowerx_nodot(ap, len));
 }

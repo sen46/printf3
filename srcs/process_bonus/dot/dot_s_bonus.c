@@ -12,37 +12,40 @@
 
 #include "../../../includes/ft_printf.h"
 
+static char	*handle_null_string(int *need_free)
+{
+	*need_free = 1;
+	return (ft_strdup("(null)"));
+}
+
+static void	write_result(char *res, int width, int precision, char *str)
+{
+	if (str == NULL && precision < 6)
+		width = 0;
+	write(1, res, width);
+}
+
 int	dot_s(va_list *ap, t_len len)
 {
-	int		flag;
 	char	*str;
+	int		need_free;
+	int		str_len;
 	char	*res;
 
 	str = va_arg(*ap, char *);
-	flag = 0;
 	if (str == NULL)
-	{
-		str = ft_strdup("(null)");
-		flag = 1;
-	}
-	len.precision = ft_min(len.precision, ft_strlen(str));
+		str = handle_null_string(&need_free);
+	else
+		need_free = 0;
+	str_len = ft_strlen(str);
+	len.precision = ft_min(len.precision, str_len);
 	len.width = ft_max(len.precision, len.width);
 	res = ft_calloc(len.width + 1, sizeof(char));
 	ft_memset(res, ' ', len.width);
-	// printf("\nstr=%s=\n", str);
 	ft_strncpy(res, str, len.precision);
-	//printf("\nstr=%s=\n", res);
-	
-	if (flag && len.precision >= 6)
-		write(1, res, len.width);
-	else if (flag == 0)
-		write(1, res, len.width);
-	else
-		len.width = 0;
-	free(res);
-	if (flag)
+	write_result(res, len.width, len.precision, str);
+	if (need_free)
 		free(str);
+	free(res);
 	return (len.width);
 }
-
-
