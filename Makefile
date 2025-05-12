@@ -36,6 +36,10 @@ SRC = \
 	srcs/process/process_upperx.c
 
 BSRC = \
+	srcs/flag1_bonus.c \
+	srcs/flag2_bonus.c \
+	srcs/spec1_judge_bonus.c \
+	srcs/spec2_judge_bonus.c \
 	srcs/is_option_bonus.c \
 	srcs/process_bonus/minus/minus_c_bonus.c \
 	srcs/process_bonus/minus/minus_di_bonus.c \
