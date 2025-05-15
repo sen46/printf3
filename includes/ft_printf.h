@@ -24,6 +24,11 @@ typedef struct s_len
 	int	width;
 	int	precision;
 	int	dot;
+	int	hash;
+	int	minus;
+	int	plus;
+	int	blank;
+	int	zero;
 }	t_len;
 
 // base function

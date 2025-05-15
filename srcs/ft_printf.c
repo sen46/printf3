@@ -17,6 +17,8 @@ int	ft_printf(const char *arg1, ...)
 	va_list	ap;
 	int		printed_chars;
 
+	if (arg1 == NULL)
+		return (-1);
 	va_start(ap, arg1);
 	printed_chars = run(&ap, arg1);
 	va_end(ap);
