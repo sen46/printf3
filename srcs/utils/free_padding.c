@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   width_c_bonus.c                                    :+:      :+:    :+:   */
+/*   free_padding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 18:56:11 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/10 16:58:16 by ssawa            ###   ########.fr       */
+/*   Created: 2025/05/18 20:26:31 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/18 20:27:46 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
-int	width_c(va_list *ap, t_len *len)
+void	free_padding(t_padding *pad)
 {
-	unsigned char	c;
-	char			*res;
-
-	c = (unsigned char)va_arg(*ap, int);
-	res = ft_calloc(len->width + 1, sizeof(char));
-	ft_memset(res, ' ', len->width);
-	res[len->width - 1] = c;
-	write(1, res, len->width);
-	free(res);
-	return (len->width);
+	free(pad->left);
+	free(pad->middle);
+	free(pad->right);
 }

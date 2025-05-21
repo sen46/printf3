@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minus_c_bonus.c                                    :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 18:56:11 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/09 22:37:19 by ssawa            ###   ########.fr       */
+/*   Created: 2025/05/17 15:33:07 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/17 15:35:50 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/ft_printf.h"
+#include "../libft/libft.h"
 
-int	minus_c(va_list *ap, t_len len)
+char	*ft_strjoin_free(char *dest, char *src)
 {
-	unsigned char	c;
-	char			*res;
+	char	*res;
 
-	if (len.width == 0)
-		len.width = 1;
-	c = (unsigned char)va_arg(*ap, int);
-	res = ft_calloc(len.width + 1, sizeof(char));
-	ft_memset(res, ' ', len.width);
-	res[0] = c;
-	write(1, res, len.width);
-	free(res);
-	return (len.width);
+	res = ft_strjoin(dest, src);
+	free(src);
+	return (res);
 }

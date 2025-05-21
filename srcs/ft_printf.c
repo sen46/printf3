@@ -12,15 +12,15 @@
 
 #include "../includes/ft_printf.h"
 
-int	ft_printf(const char *arg1, ...)
+int	ft_printf(const char *fmt, ...)
 {
 	va_list	ap;
 	int		printed_chars;
 
-	if (arg1 == NULL)
+	if (fmt == NULL)
 		return (-1);
-	va_start(ap, arg1);
-	printed_chars = run(&ap, arg1);
+	va_start(ap, fmt);
+	printed_chars = run(&ap, fmt);
 	va_end(ap);
 	return (printed_chars);
 }

@@ -6,55 +6,26 @@
 /*   By: sen46 <sen46@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 20:30:00 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/12 19:58:19 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/17 19:13:58 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-#include "libft/libft.h"
-
-int	set_len_info(t_len *len, const char *fmt, int i)
-{
-	len->dot = 0;
-	if (ft_isdigit(fmt[i]))
-	{
-		len->width = ft_atoi(&fmt[i]);
-		i += ft_nbrlen_dec(len->width);
-	}
-	else
-		len->width = 0;
-	if (fmt[i] == '.')
-	{
-		i++;
-		len->dot = 1;
-	}
-	if (ft_isdigit(fmt[i]))
-	{
-		len->precision = ft_atoi(&fmt[i]);
-		i += ft_nbrlen_dec(len->precision);
-	}
-	else
-		len->precision = 0;
-	return (i);
-}
 
 static int	handle_format(const char *fmt, int *i,
 		va_list *ap, int *printed_chars)
 {
+	t_flag	flag;
+
 	if (is_specifier(fmt[*i]))
 		spec_judge(fmt[(*i)++], ap, printed_chars);
-	else if (fmt[*i] == '-')
-		minus(fmt, printed_chars, ap, i);
-	else if (fmt[*i] == '+')
-		plus(fmt, printed_chars, ap, i);
-	else if (fmt[*i] == ' ')
-		blank(fmt, printed_chars, ap, i);
-	else if (fmt[*i] == '#')
-		hash(fmt, printed_chars, ap, i);
-	else if (fmt[*i] == '0')
-		zero(fmt, printed_chars, ap, i);
-	else if (ft_isdigit(fmt[*i]) || fmt[*i] == '.')
-		width(fmt, printed_chars, ap, i);
+	else if ((*i) += flag_check(&fmt[(*i)], &flag))
+	{
+		flag.spec = fmt[(*i)++];
+		spec_judge_flag(&flag, ap, printed_chars);
+		// 処理
+		// フローチャートを参照
+	}
 	else
 		return (-1);
 	return (0);

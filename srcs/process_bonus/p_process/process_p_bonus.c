@@ -1,0 +1,90 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_p_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 20:37:24 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/20 19:56:24 by ssawa            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../../includes/ft_printf.h"
+
+static void	output_padding(t_flag *flag, t_padding *pad, unsigned long val)
+{
+	pad->llen = ft_strlen(pad->left);
+	pad->mlen = ft_strlen(pad->middle);
+	pad->rlen = ft_strlen(pad->right);
+	if (flag->minus)
+	{
+		if (flag->hash && val != 0)
+			pad->left[1] = 'x';
+		ft_putstr_fd(pad->left, 1);
+		ft_putstr_fd(pad->middle, 1);
+		ft_putstr_fd(pad->right, 1);
+	}
+	else
+	{
+		if (flag->hash && val != 0)
+			pad->right[1] = 'x';
+		ft_putstr_fd(pad->left, 1);
+		ft_putstr_fd(pad->right, 1);
+		ft_putstr_fd(pad->middle, 1);
+	}
+}
+
+int	process_p_flag(t_flag *flag, va_list *ap)
+{
+	void		*val;
+	t_padding	pad;
+
+	val = va_arg(*ap, void *);
+	if (val != 0)
+		flag->hash = 1;
+	if (val == 0 )
+		pad.middle = ft_strdup("(nil)");
+	else
+		pad.middle = ft_itoa_base((unsigned long)val, "0123456789abcdef");
+	// if (flag->precision != -1 && flag->dot)
+		// flag->zero = 0;
+	flag->precision = ft_max(ft_strlen(pad.middle), flag->precision);
+	if (flag->hash && val != 0)
+		flag->precision += 2;
+	flag->width = ft_max(flag->width, flag->precision);
+	if (flag->minus)
+	{
+		pad.left = ft_calloc(flag->precision - ft_strlen(pad.middle) + 1, 1);
+		ft_memset(pad.left, '0', flag->precision - ft_strlen(pad.middle));
+		pad.right = ft_calloc(flag->width - flag->precision + 1, 1);
+			ft_memset(pad.right, ' ', flag->width - flag->precision);
+	}
+	else
+	{
+		pad.right = ft_calloc(flag->precision - ft_strlen(pad.middle) + 1, 1);
+		ft_memset(pad.right, '0', flag->precision - ft_strlen(pad.middle));
+		pad.left = ft_calloc(flag->width - flag->precision + 1, 1);
+		// if (flag->zero && val != 0)
+			// ft_memset(pad.left, '0', flag->width - flag->precision);
+		// else
+			ft_memset(pad.left, ' ', flag->width - flag->precision);
+	}
+	output_padding(flag, &pad, (unsigned long)val);
+	free_padding(&pad);
+	return (pad.llen + pad.mlen + pad.rlen);
+}
+
+/*
+int main()
+{
+	t_flag flag;
+
+	flag.zero = 0;
+	flag.minus = 0;
+	flag.precision = -1;
+	flag.width = -1;
+	process_lowerxflag(&flag, -1);
+}
+*/
+
