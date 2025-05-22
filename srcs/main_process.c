@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run.c                                              :+:      :+:    :+:   */
+/*   main_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sen46 <sen46@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 20:30:00 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/22 16:22:47 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/22 16:13:36 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	handle_format(const char *fmt, int *i,
 	return (0);
 }
 
-int	run(va_list *ap, const char *fmt)
+int	main_process(va_list *ap, const char *fmt)
 {
 	int	i;
 	int	printed_chars;

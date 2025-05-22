@@ -6,12 +6,11 @@
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 23:08:34 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/20 21:19:31 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/22 17:51:12 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-#include "libft/libft.h"
 
 void	spec_judge(char c, va_list *ap, int *cnt)
 {
@@ -27,6 +26,8 @@ void	spec_judge(char c, va_list *ap, int *cnt)
 		*cnt += process_ptr(ap);
 	else if (c == 'u')
 		*cnt += process_u(ap);
+	else if (c == 'o')
+		*cnt += process_o(ap);
 	else if (c == 'x')
 		*cnt += process_lowerx(ap);
 	else if (c == 'X')
@@ -34,7 +35,6 @@ void	spec_judge(char c, va_list *ap, int *cnt)
 	else if (c == '%')
 		*cnt += process_per();
 }
-
 
 void	spec_judge_flag(t_flag *flag, va_list *ap, int *cnt)
 {
@@ -56,29 +56,8 @@ void	spec_judge_flag(t_flag *flag, va_list *ap, int *cnt)
 		*cnt += process_upperx_flag(flag, ap);
 	else if (flag->spec == 'p')
 		*cnt += process_p_flag(flag, ap);
+	else if (flag->spec == 'o')
+		*cnt += process_o_flag(flag, ap);
+	else if (flag->spec == '%')
+		*cnt += process_per_flag();
 }
-
-/*
-void	spec_judge_flag(t_flag *flag, va_list *ap, int *cnt)
-{
-	t_val	val;
-
-	if (flag->spec == 'c')
-	{
-		val.c = (unsigned char)va_arg(*ap, int);
-		val.str = ft_strdup(&val.c);
-	}
-	else if (flag->spec == 's')
-		val.str = va_arg(*ap, char *);
-	else if (flag->spec == 'd' || flag->spec == 'i')
-		val.sint= va_arg(*ap, int);
-	else if (flag->spec == 'u')
-		val.uint = va_arg(*ap, unsigned int);
-	else if (flag->spec == 'x' || flag->spec == 'X')
-		val.uint = va_arg(*ap, unsigned int);
-	else if (flag->spec == 'p')
-	{
-
-	}
-}
-*/

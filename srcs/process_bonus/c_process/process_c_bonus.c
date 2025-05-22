@@ -28,7 +28,7 @@ static void	pad_len_init(t_padding *pad)
 
 int	process_c_flag(t_flag *flag, va_list *ap)
 {
-	char	c;
+	char		c;
 	t_padding	pad;
 
 	c = (unsigned char)va_arg(*ap, int);

@@ -6,11 +6,34 @@
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 21:18:36 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/20 23:13:29 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/22 18:28:01 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_printf.h"
+
+static void	output_padding_sub(t_flag *flag, t_padding *pad)
+{
+	// printf("flag->blank = %d, flag->plus = %d, flag->zero = %d\n", flag->blank, flag->plus, flag->zero);
+	if (!flag->sign && flag->zero && pad->llen)
+		pad->left[0] = '-';
+	else if (!flag->sign && pad->rlen) // if (!flag->sign)
+			pad->right[0] = '-';
+	else if (flag->zero && flag->plus && pad->llen)
+		pad->left[0] = '+';
+	else if (flag->plus && pad->rlen)
+		pad->right[0] = '+';
+	else if (flag->zero && flag->blank && pad->llen)
+		pad->left[0] = ' ';
+	else if (flag->blank && pad->rlen)
+		pad->right[0] = ' ';
+	if (pad->right[0] == pad->left[0] && (pad->right[0] == '+' || \
+				pad->left[0] == '-'))
+		pad->right[0] = '0';
+	write(1, pad->left, pad->llen);
+	write(1, pad->right, pad->rlen);
+	write(1, pad->middle, pad->mlen);
+}
 
 static void	output_padding(t_flag *flag, t_padding *pad)
 {
@@ -30,38 +53,11 @@ static void	output_padding(t_flag *flag, t_padding *pad)
 		ft_putstr_fd(pad->right, 1);
 	}
 	else
-	{
-		if (!flag->sign && flag->zero && pad->llen)
-			pad->left[0] = '-';
-		if (!flag->sign)
-			pad->right[0] = '-';
-		else if (flag->plus && flag->sign)
-			pad->right[0] = '+';
-		else if (flag->blank && flag->sign)
-			pad->right[0] = ' ';
-		if (pad->right[0] == pad->left[0] && pad->right[0] == '-')
-			pad->right[0] = '0';
-		write(1, pad->left, pad->llen);
-		write(1, pad->right, pad->rlen);
-		write(1, pad->middle, pad->mlen);
-	}
+		output_padding_sub(flag, pad);
 }
 
-static void	minus(long val, t_flag *flag, t_padding *pad)
+static void	main_process_sub(t_padding *pad, t_flag *flag)
 {
-	//val = -val;
-	// printf("\nflag.minus=%d, flag.zero=%d, flag.precision=%d, flag.width=%d\n", flag->minus, flag->zero, flag->precision, flag->width);
-	if (flag->dot && val == 0 && flag->precision <= 0)
-		pad->middle = ft_strdup("");
-	else
-		pad->middle = ft_itoa(val);
-	flag->precision = ft_max(ft_strlen(pad->middle), flag->precision);
-	if (flag->blank || flag->plus || !flag->sign)
-		flag->precision++;
-	flag->width = ft_max(flag->width, flag->precision);
-	if (flag->precision != -1 && flag->dot)
-		flag->zero = 0;
-	// printf("\nflag.minus=%d, flag.zero=%d, flag.precision=%d, flag.width=%d\n", flag->minus, flag->zero, flag->precision, flag->width);
 	if (flag->minus)
 	{
 		pad->left = ft_calloc(flag->precision - ft_strlen(pad->middle) + 1, 1);
@@ -79,7 +75,21 @@ static void	minus(long val, t_flag *flag, t_padding *pad)
 		else
 			ft_memset(pad->left, ' ', flag->width - flag->precision);
 	}
-	// printf("okok==%ld==okok\n", val);
+}
+
+static void	main_process_di(long val, t_flag *flag, t_padding *pad)
+{
+	if (flag->dot && val == 0 && flag->precision <= 0)
+		pad->middle = ft_strdup("");
+	else
+		pad->middle = ft_itoa(val);
+	flag->precision = ft_max(ft_strlen(pad->middle), flag->precision);
+	if (flag->blank || flag->plus || !flag->sign)
+		flag->precision++;
+	flag->width = ft_max(flag->width, flag->precision);
+	if (flag->precision != -1 && flag->dot)
+		flag->zero = 0;
+	main_process_sub(pad, flag);
 }
 
 int	process_di_flag(t_flag *flag, va_list *ap)
@@ -93,10 +103,9 @@ int	process_di_flag(t_flag *flag, va_list *ap)
 	else
 		flag->sign = 0;
 	if (val >= 0)
-		minus(val, flag, &pad);
+		main_process_di(val, flag, &pad);
 	else
-		minus(-1LL * val, flag, &pad);
-
+		main_process_di(-1LL * val, flag, &pad);
 	output_padding(flag, &pad);
 	free_padding(&pad);
 	return (pad.llen + pad.mlen + pad.rlen);

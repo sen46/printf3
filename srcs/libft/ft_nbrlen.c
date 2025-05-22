@@ -43,3 +43,16 @@ int	ft_nbrlen_hex(unsigned long nbr)
 	}
 	return (cnt);
 }
+
+int	ft_nbrlen_oct(unsigned long nbr)
+{
+	int	cnt;
+
+	cnt = 1;
+	while (nbr >= 8)
+	{
+		cnt++;
+		nbr /= 8;
+	}
+	return (cnt);
+}

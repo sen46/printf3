@@ -23,7 +23,7 @@ INCLUDES    = -I./includes -I$(LIBFT_DIR)
 SRC = \
 	srcs/ft_printf.c \
 	srcs/is_spec.c \
-	srcs/run.c \
+	srcs/main_process.c \
 	srcs/spec_judge.c \
 	srcs/process/process_c.c \
 	srcs/process/process_d.c \
@@ -33,19 +33,23 @@ SRC = \
 	srcs/process/process_ptr.c \
 	srcs/process/process_s.c \
 	srcs/process/process_u.c \
+	srcs/process/process_o.c \
 	srcs/process/process_upperx.c \
 	srcs/utils/free_padding.c \
 	srcs/utils/ft_strjoin_free.c
 
 BONUS_SRC = \
 	srcs/flag_handle_bonus.c \
+	srcs/is_flag_bonus.c \
 	srcs/process_bonus/c_process/process_c_bonus.c \
 	srcs/process_bonus/s_process/process_s_bonus.c \
 	srcs/process_bonus/di_process/process_di_bonus.c \
 	srcs/process_bonus/u_process/process_u_bonus.c \
+	srcs/process_bonus/o_process/process_o_bonus.c \
 	srcs/process_bonus/x_process/process_lowerx_bonus.c \
 	srcs/process_bonus/x_process/process_upperx_bonus.c \
-	srcs/process_bonus/p_process/process_p_bonus.c
+	srcs/process_bonus/p_process/process_p_bonus.c \
+	srcs/process_bonus/per_process/process_per_bonus.c
 
 OBJ     = $(SRC:.c=.o)
 B_OBJ   = $(BONUS_SRC:.c=.o)

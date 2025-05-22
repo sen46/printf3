@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   process_o.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 23:01:07 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/02 09:43:22 by ssawa            ###   ########.fr       */
+/*   Created: 2025/05/02 09:24:25 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/22 17:49:59 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
-int	ft_printf(const char *fmt, ...)
+int	process_o(va_list *ap)
 {
-	va_list	ap;
-	int		printed_chars;
+	int				len;
+	unsigned int	val;
+	char			*str;
 
-	if (fmt == NULL)
-		return (-1);
-	va_start(ap, fmt);
-	printed_chars = main_process(&ap, fmt);
-	va_end(ap);
-	return (printed_chars);
+	val = va_arg(*ap, unsigned int);
+	str = ft_itoa_base(val, "01234567");
+	ft_putstr_fd(str, 1);
+	len = ft_strlen(str);
+	free(str);
+	return (len);
 }

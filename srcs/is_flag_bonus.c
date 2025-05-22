@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   is_flag_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 23:01:07 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/02 09:43:22 by ssawa            ###   ########.fr       */
+/*   Created: 2025/05/22 15:28:31 by ssawa             #+#    #+#             */
+/*   Updated: 2025/05/22 15:29:20 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int	ft_printf(const char *fmt, ...)
+int	is_flag(const char c, t_flag *flag)
 {
-	va_list	ap;
-	int		printed_chars;
+	int	rtn;
 
-	if (fmt == NULL)
-		return (-1);
-	va_start(ap, fmt);
-	printed_chars = main_process(&ap, fmt);
-	va_end(ap);
-	return (printed_chars);
+	rtn = 1;
+	if (c == '-')
+		flag->minus = 1;
+	else if (c == ' ')
+		flag->blank = 1;
+	else if (c == '+')
+		flag->plus = 1;
+	else if (c == '#')
+		flag->hash = 1;
+	else if (c == '0')
+		flag->zero = 1;
+	else
+		rtn = 0;
+	return (rtn);
 }

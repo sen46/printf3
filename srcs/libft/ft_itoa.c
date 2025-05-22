@@ -47,8 +47,11 @@ char	*ft_itoa_base(unsigned long num, char *base)
 	int		idx;
 	int		base_len;
 
-	len = ft_nbrlen_hex(num);
 	base_len = ft_strlen(base);
+	if (base_len == 16)
+		len = ft_nbrlen_hex(num);
+	else if (base_len == 8)
+		len = ft_nbrlen_oct(num);
 	res = (char *)ft_calloc(len + 1, sizeof(char));
 	if (res == NULL)
 		return (NULL);

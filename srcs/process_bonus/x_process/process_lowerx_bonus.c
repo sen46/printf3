@@ -6,17 +6,21 @@
 /*   By: ssawa <ssawa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 20:37:24 by ssawa             #+#    #+#             */
-/*   Updated: 2025/05/18 20:37:27 by ssawa            ###   ########.fr       */
+/*   Updated: 2025/05/22 18:20:42 by ssawa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/ft_printf.h"
 
-static void	output_padding(t_flag *flag, t_padding *pad, unsigned val)
+static void	pad_init(t_padding *pad)
 {
 	pad->llen = ft_strlen(pad->left);
 	pad->mlen = ft_strlen(pad->middle);
 	pad->rlen = ft_strlen(pad->right);
+}
+static void	output_padding(t_flag *flag, t_padding *pad, unsigned int val)
+{
+	pad_init(pad);
 	if (flag->minus)
 	{
 		if (flag->hash && val != 0)
@@ -28,10 +32,38 @@ static void	output_padding(t_flag *flag, t_padding *pad, unsigned val)
 	else
 	{
 		if (flag->hash && val != 0)
-			pad->right[1] = 'x';
+		{
+			if (flag->zero && pad->left[1] == '0')
+				pad->left[1] = 'x';
+			else if (pad->llen == 1)
+				pad->right[0] = 'x';
+			else
+				pad->right[1] = 'x';
+		}
 		ft_putstr_fd(pad->left, 1);
 		ft_putstr_fd(pad->right, 1);
 		ft_putstr_fd(pad->middle, 1);
+	}
+}
+
+static void	process_lowerx_flag_sub(t_flag *flag, t_padding *pad)
+{
+	if (flag->minus)
+	{
+		pad->left = ft_calloc(flag->precision - ft_strlen(pad->middle) + 1, 1);
+		ft_memset(pad->left, '0', flag->precision - ft_strlen(pad->middle));
+		pad->right = ft_calloc(flag->width - flag->precision + 1, 1);
+		ft_memset(pad->right, ' ', flag->width - flag->precision);
+	}
+	else
+	{
+		pad->right = ft_calloc(flag->precision - ft_strlen(pad->middle) + 1, 1);
+		ft_memset(pad->right, '0', flag->precision - ft_strlen(pad->middle));
+		pad->left = ft_calloc(flag->width - flag->precision + 1, 1);
+		if (flag->zero && !flag->dot)
+			ft_memset(pad->left, '0', flag->width - flag->precision);
+		else
+			ft_memset(pad->left, ' ', flag->width - flag->precision);
 	}
 }
 
@@ -51,37 +83,8 @@ int	process_lowerx_flag(t_flag *flag, va_list *ap)
 	if (flag->hash && val != 0)
 		flag->precision += 2;
 	flag->width = ft_max(flag->width, flag->precision);
-	if (flag->minus)
-	{
-		pad.left = ft_calloc(flag->precision - ft_strlen(pad.middle) + 1, 1);
-		ft_memset(pad.left, '0', flag->precision - ft_strlen(pad.middle));
-		pad.right = ft_calloc(flag->width - flag->precision + 1, 1);
-			ft_memset(pad.right, ' ', flag->width - flag->precision);
-	}
-	else
-	{
-		pad.right = ft_calloc(flag->precision - ft_strlen(pad.middle) + 1, 1);
-		ft_memset(pad.right, '0', flag->precision - ft_strlen(pad.middle));
-		pad.left = ft_calloc(flag->width - flag->precision + 1, 1);
-		if (flag->zero && val != 0)
-			ft_memset(pad.left, '0', flag->width - flag->precision);
-		else
-			ft_memset(pad.left, ' ', flag->width - flag->precision);
-	}
+	process_lowerx_flag_sub(flag, &pad);
 	output_padding(flag, &pad, val);
 	free_padding(&pad);
 	return (pad.llen + pad.mlen + pad.rlen);
 }
-
-/*
-int main()
-{
-	t_flag flag;
-
-	flag.zero = 0;
-	flag.minus = 0;
-	flag.precision = -1;
-	flag.width = -1;
-	process_lowerxflag(&flag, -1);
-}
-*/
