@@ -18,6 +18,7 @@ static void	pad_init(t_padding *pad)
 	pad->mlen = ft_strlen(pad->middle);
 	pad->rlen = ft_strlen(pad->right);
 }
+
 static void	output_padding(t_flag *flag, t_padding *pad, unsigned int val)
 {
 	pad_init(pad);

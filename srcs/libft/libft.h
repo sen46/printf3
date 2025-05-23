@@ -71,7 +71,8 @@ char	*ft_itoa(long n);
 char	*ft_itoa_base(unsigned long num, char *base);
 int		ft_nbrlen_dec(long nbr);
 int		ft_nbrlen_hex(unsigned long nbr);
-int	ft_nbrlen_oct(unsigned long nbr);
+int		ft_nbrlen_oct(unsigned long nbr);
 long	ft_min(long a, long b);
 long	ft_max(long a, long b);
+
 #endif

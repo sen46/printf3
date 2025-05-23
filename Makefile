@@ -60,6 +60,7 @@ BONUS_SRC = \
 	srcs/process_bonus/x_process/process_lowerx_bonus.c \
 	srcs/process_bonus/x_process/process_upperx_bonus.c \
 	srcs/process_bonus/p_process/process_p_bonus.c \
+	srcs/process_bonus/p_process/output_bonus.c \
 	srcs/process_bonus/per_process/process_per_bonus.c
 
 OBJ     = $(SRC:.c=.o)

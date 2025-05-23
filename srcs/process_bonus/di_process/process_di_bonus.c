@@ -14,11 +14,10 @@
 
 static void	output_padding_sub(t_flag *flag, t_padding *pad)
 {
-	// printf("flag->blank = %d, flag->plus = %d, flag->zero = %d\n", flag->blank, flag->plus, flag->zero);
 	if (!flag->sign && flag->zero && pad->llen)
 		pad->left[0] = '-';
-	else if (!flag->sign && pad->rlen) // if (!flag->sign)
-			pad->right[0] = '-';
+	else if (!flag->sign && pad->rlen)
+		pad->right[0] = '-';
 	else if (flag->zero && flag->plus && pad->llen)
 		pad->left[0] = '+';
 	else if (flag->plus && pad->rlen)
@@ -28,7 +27,7 @@ static void	output_padding_sub(t_flag *flag, t_padding *pad)
 	else if (flag->blank && pad->rlen)
 		pad->right[0] = ' ';
 	if (pad->right[0] == pad->left[0] && (pad->right[0] == '+' || \
-				pad->left[0] == '-'))
+pad->left[0] == '-'))
 		pad->right[0] = '0';
 	write(1, pad->left, pad->llen);
 	write(1, pad->right, pad->rlen);

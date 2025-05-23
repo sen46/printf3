@@ -12,7 +12,8 @@
 
 #include "../../../includes/ft_printf.h"
 
-// static void	output_padding(t_flag *flag, t_padding *pad, unsigned int val)
+// 未完成
+
 static void	output_padding(t_flag *flag, t_padding *pad)
 {
 	pad->llen = ft_strlen(pad->left);
@@ -20,16 +21,12 @@ static void	output_padding(t_flag *flag, t_padding *pad)
 	pad->rlen = ft_strlen(pad->right);
 	if (flag->minus)
 	{
-		// if (flag->hash && val != 0)
-			// pad->left[1] = 'x';
 		ft_putstr_fd(pad->left, 1);
 		ft_putstr_fd(pad->middle, 1);
 		ft_putstr_fd(pad->right, 1);
 	}
 	else
 	{
-		// if (flag->hash && val != 0)
-			// pad->right[1] = 'x';
 		ft_putstr_fd(pad->left, 1);
 		ft_putstr_fd(pad->right, 1);
 		ft_putstr_fd(pad->middle, 1);
@@ -75,6 +72,6 @@ int	process_o_flag(t_flag *flag, va_list *ap)
 	flag->width = ft_max(flag->width, flag->precision);
 	process_o_flag_sub(flag, &pad);
 	output_padding(flag, &pad);
-	// free_padding(&pad);
+	free_padding(&pad);
 	return (pad.llen + pad.mlen + pad.rlen);
 }

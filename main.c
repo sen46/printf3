@@ -2,7 +2,7 @@
 
 int main()
 {
-	int ret =       printf("=% #-+02.3p=\n",(void*)0x5d29fa520b20);
-	// int ft_ret = ft_printf("=% #-+0p=\n",(void*)0x5d29fa520b20);
-	// printf("ret = %d, ft_ret = %d\n", ret, ft_ret);
+	int ret =       printf("=%0-50p=\n",(void *)0x5592ac2192a0);
+	int ft_ret = ft_printf("=%0-50p=\n",(void *)0x5592ac2192a0);
+	printf("ret = %d, ft_ret = %d\n", ret, ft_ret);
 }
