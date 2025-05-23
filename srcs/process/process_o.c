@@ -18,6 +18,27 @@ int	process_o(va_list *ap)
 	unsigned int	val;
 	char			*str;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	val = va_arg(*ap, unsigned int);
 	str = ft_itoa_base(val, "01234567");
 	ft_putstr_fd(str, 1);
