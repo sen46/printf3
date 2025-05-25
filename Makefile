@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: yourname <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/05/22 00:00:00 by yourname          #+#    #+#              #
-#    Updated: 2025/05/22 00:00:00 by yourname         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 ########################################
 #            Library Settings          #
 ########################################
@@ -44,7 +32,6 @@ SRC = \
 	srcs/process/process_ptr.c \
 	srcs/process/process_s.c \
 	srcs/process/process_u.c \
-	srcs/process/process_o.c \
 	srcs/process/process_upperx.c \
 	srcs/utils/free_padding.c \
 	srcs/utils/ft_strjoin_free.c
@@ -56,7 +43,6 @@ BONUS_SRC = \
 	srcs/process_bonus/s_process/process_s_bonus.c \
 	srcs/process_bonus/di_process/process_di_bonus.c \
 	srcs/process_bonus/u_process/process_u_bonus.c \
-	srcs/process_bonus/o_process/process_o_bonus.c \
 	srcs/process_bonus/x_process/process_lowerx_bonus.c \
 	srcs/process_bonus/x_process/process_upperx_bonus.c \
 	srcs/process_bonus/p_process/process_p_bonus.c \
@@ -70,31 +56,36 @@ B_OBJ   = $(BONUS_SRC:.c=.o)
 #               Rules                  #
 ########################################
 
+# デフォルトターゲット
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
-	cp $(LIBFT) $(NAME)
-	ar rcs $(NAME) $(OBJ)
-
-bonus: $(LIBFT) $(OBJ) $(B_OBJ)
+# ライブラリ作成: 通常 + bonusもまとめてアーカイブ
+$(NAME): $(LIBFT) $(OBJ) $(B_OBJ)
 	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJ) $(B_OBJ)
 
+# bonusターゲットも一応定義（同じ内容）
+bonus: $(NAME)
+
+# Libftビルド
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
+# オブジェクトファイル作成
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+# オブジェクト削除
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
 	rm -f $(OBJ) $(B_OBJ)
 
+# バイナリ・ライブラリ削除
 fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 
+# 全クリーン&再ビルド
 re: fclean all
 
 .PHONY: all bonus clean fclean re
-

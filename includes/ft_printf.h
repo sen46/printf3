@@ -54,7 +54,6 @@ int		process_s(va_list *ap);
 int		process_d(va_list *ap);
 int		process_i(va_list *ap);
 int		process_u(va_list *ap);
-int		process_o(va_list *ap);
 int		process_lowerx(va_list *ap);
 int		process_upperx(va_list *ap);
 int		process_ptr(va_list *ap);
@@ -69,7 +68,6 @@ int		process_di_flag(t_flag *flag, va_list *ap);
 int		process_lowerx_flag(t_flag *flag, va_list *ap);
 int		process_upperx_flag(t_flag *flag, va_list *ap);
 int		process_u_flag(t_flag *flag, va_list *ap);
-int		process_o_flag(t_flag *flag, va_list *ap);
 int		process_p_flag(t_flag *flag, va_list *ap);
 int		process_per_flag(void);
 

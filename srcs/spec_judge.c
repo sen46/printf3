@@ -26,8 +26,6 @@ void	spec_judge(char c, va_list *ap, int *cnt)
 		*cnt += process_ptr(ap);
 	else if (c == 'u')
 		*cnt += process_u(ap);
-	else if (c == 'o')
-		*cnt += process_o(ap);
 	else if (c == 'x')
 		*cnt += process_lowerx(ap);
 	else if (c == 'X')
@@ -41,23 +39,17 @@ void	spec_judge_flag(t_flag *flag, va_list *ap, int *cnt)
 	if (flag->spec == 'c')
 		*cnt += process_c_flag(flag, ap);
 	else if (flag->spec == 's')
-	{
 		*cnt += process_s_flag(flag, ap);
-	}
 	else if (flag->spec == 'd' || flag->spec == 'i')
 		*cnt += process_di_flag(flag, ap);
 	else if (flag->spec == 'u')
 		*cnt += process_u_flag(flag, ap);
 	else if (flag->spec == 'x')
-	{
 		*cnt += process_lowerx_flag(flag, ap);
-	}
 	else if (flag->spec == 'X')
 		*cnt += process_upperx_flag(flag, ap);
 	else if (flag->spec == 'p')
 		*cnt += process_p_flag(flag, ap);
-	else if (flag->spec == 'o')
-		*cnt += process_o_flag(flag, ap);
 	else if (flag->spec == '%')
 		*cnt += process_per_flag();
 }
